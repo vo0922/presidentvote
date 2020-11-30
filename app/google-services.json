@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "536294586461",
+    "firebase_url": "https://school-president-electio-cd383.firebaseio.com",
+    "project_id": "school-president-electio-cd383",
+    "storage_bucket": "school-president-electio-cd383.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536294586461:android:8a313a42a896e0921535b4",
+        "android_client_info": {
+          "package_name": "com.example.presidentvote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536294586461-h705bavrgqn31cdi4fqajflqr8sn7hh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.presidentvote",
+            "certificate_hash": "f60918dcb54598ba00171d3bc5908467680727c9"
+          }
+        },
+        {
+          "client_id": "536294586461-jg0e41b8rrovnemoskmea9f6488lga9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlZOD3hrJPaQ1g3mYVCCkXSSe4zHOSfIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536294586461-jg0e41b8rrovnemoskmea9f6488lga9t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
