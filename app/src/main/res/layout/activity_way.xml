@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".way"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:text="투표하기" />
+            android:text="투표하기"
+            app:backgroundTint="#7AA7BC" />
 
         <Button
             android:id="@+id/votelist"
@@ -28,7 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:text="투표목록" />
+            android:text="투표목록"
+            android:backgroundTint="#7AA7BC"/>
 
         <Button
             android:id="@+id/manager"
@@ -38,7 +40,8 @@
             android:layout_weight="1"
             android:text="관리자"
             android:onClick="managerView"
-            android:clickable="true" />
+            android:clickable="true"
+            android:backgroundTint="#7AA7BC"/>
     </LinearLayout>
 
     <LinearLayout

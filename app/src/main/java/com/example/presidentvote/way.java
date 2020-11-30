@@ -37,7 +37,6 @@ public class way extends AppCompatActivity implements GoogleApiClient.OnConnecti
         setContentView(R.layout.activity_way);
         setTitle(R.string.app_name2);
 
-
         Intent intent = getIntent();
         String nickName = intent.getStringExtra("nickName");
         String photoUri = intent.getStringExtra("photoUri");
