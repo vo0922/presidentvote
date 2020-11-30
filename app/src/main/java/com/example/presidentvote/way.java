@@ -1,13 +1,18 @@
 package com.example.presidentvote;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +30,13 @@ public class way extends AppCompatActivity implements GoogleApiClient.OnConnecti
     private TextView tv_result;
     private ImageView imageView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_way);
         setTitle(R.string.app_name2);
+
 
         Intent intent = getIntent();
         String nickName = intent.getStringExtra("nickName");
@@ -81,5 +88,31 @@ public class way extends AppCompatActivity implements GoogleApiClient.OnConnecti
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    public void managerView(View view) {
+        LinearLayout linear = (LinearLayout) View.inflate(this, R.layout.activity_alert_dialog, null);
+        new AlertDialog.Builder(this).setView(linear)
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EditText passward = (EditText)linear.findViewById(R.id.editps);
+                String value = passward.getText().toString();
+                if(value.equals("123456")) {
+                    Toast.makeText(way.this, "인증성공", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), Manager.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(way.this, "틀렸습니다", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            }
+        }).show();
     }
 }

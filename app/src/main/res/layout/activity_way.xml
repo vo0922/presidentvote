@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/votego"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -23,7 +23,7 @@
             android:text="투표하기" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/votelist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
@@ -31,12 +31,14 @@
             android:text="투표목록" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/manager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:text="관리자" />
+            android:text="관리자"
+            android:onClick="managerView"
+            android:clickable="true" />
     </LinearLayout>
 
     <LinearLayout
