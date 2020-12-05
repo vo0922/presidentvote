@@ -3,6 +3,7 @@ package com.example.presidentvote;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
@@ -23,9 +24,18 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Manager extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -35,6 +45,7 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
     Uri photoUri;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("candidate");
+    String uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +93,10 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
             finish();
             return true;
         } else if(id == R.id.action_btn3) {
-
+            Intent intent = new Intent(this, managerview.class);
+            startActivity(intent);
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -129,9 +143,61 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
         EditText et_cs = (EditText)findViewById(R.id.cs);
         String str_cs = et_cs.getText().toString();
 
-        myRef.setValue(str_name);
-        myRef.child(str_name).child("class").setValue(str_cs);
-        myRef.child(str_name).child("gender").setValue(str_gender);
-        //myRef.child(str_name).child("image").setValue();
+        if(!str_name.equals("")) {
+            if(photoUri != null) {
+                myRef.child(str_name).child("class").setValue(str_cs);
+                myRef.child(str_name).child("gender").setValue(str_gender);
+                //myRef.child(str_name).child("image").setValue();
+                uploadFile();
+                myRef.child(str_name).child("image").setValue(uri);
+                Toast.makeText(this, "등록 성공", Toast.LENGTH_SHORT).show();
+
+            }else{
+                Toast.makeText(this, "사진을 올려주세요.", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(this, "이름을 입력하세요.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void uploadFile() {
+        if (photoUri != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("업로드중...");
+            progressDialog.show();
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
+            Date now = new Date();
+            String filename = formatter.format(now) + ".png";
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://school-president-electio-cd383.appspot.com").child("image/" + filename);
+            uri = storageRef.toString();
+            storageRef.putFile(photoUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(getApplicationContext(), managerview.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                   @SuppressWarnings("VisibleForTests")
+                           double progress = (100* snapshot.getBytesTransferred());
+                   snapshot.getTotalByteCount();
+                   progressDialog.setMessage("Uploaded" + ((int)progress) + "% ...");
+                }
+            });
+        } else {
+            Toast.makeText(getApplicationContext(), "사진을 올려주세요.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
