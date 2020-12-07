@@ -1,6 +1,7 @@
 package com.example.presidentvote;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
 
     private ArrayList<SingerItem> arrayList;
     private Context context;
+    private String gname;
 
     public MyAdapter(ArrayList<SingerItem> arrayList, Context context) {
         this.arrayList = arrayList;
@@ -42,16 +45,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         Glide.with(holder.itemView)
                 .load(arrayList.get(position).getProfile())
                 .into(holder.iv_profile);
-        holder.tv_name.setText("이름 : " + arrayList.get(position).getName());
+        holder.tv_name.setText(arrayList.get(position).getName());
         holder.tv_cs.setText("학년 : " + arrayList.get(position).getCs());
         holder.tv_gender.setText("성별 : " + arrayList.get(position).getGender());
         holder.tv_num.setText("투표 수 : " + String.valueOf(arrayList.get(position).getNum()));
+
     }
 
     @Override
     public int getItemCount() {
         return (arrayList != null ? arrayList.size() : 0);
     }
+
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_profile;
@@ -67,6 +72,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
             this.tv_cs = itemView.findViewById(R.id.cs);
             this.tv_gender = itemView.findViewById(R.id.gender);
             this.tv_num = itemView.findViewById(R.id.num);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context.getApplicationContext(), infodelete.class);
+                    intent.putExtra("name", tv_name.getText());
+                    Toast.makeText(context, tv_name.getText(), Toast.LENGTH_LONG).show();
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
