@@ -78,7 +78,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
                 public void onClick(View v) {
                     Intent intent = new Intent(context.getApplicationContext(), infodelete.class);
                     intent.putExtra("name", tv_name.getText());
-                    Toast.makeText(context, tv_name.getText(), Toast.LENGTH_LONG).show();
                     context.startActivity(intent);
                 }
             });

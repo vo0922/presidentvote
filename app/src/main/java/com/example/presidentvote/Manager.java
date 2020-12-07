@@ -154,7 +154,7 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
                 String Filename = str_name + ".png";
                 FirebaseStorage storage = FirebaseStorage.getInstance("gs://school-president-electio-cd383.appspot.com");
                 StorageReference storageRef = storage.getReference();
-                for (int i = 0; i<50; i++) {
+                for (int i = 0; i<100; i++) {
                     storageRef.child("image").child(Filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
