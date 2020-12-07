@@ -45,7 +45,7 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
     Uri photoUri;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("candidate");
-    String uri;
+    String url = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,13 +145,25 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
 
         if(!str_name.equals("")) {
             if(photoUri != null) {
-                myRef.child(str_name).child("class").setValue(str_cs);
-                myRef.child(str_name).child("gender").setValue(str_gender);
-                //myRef.child(str_name).child("image").setValue();
                 uploadFile();
-                myRef.child(str_name).child("image").setValue(uri);
-                Toast.makeText(this, "등록 성공", Toast.LENGTH_SHORT).show();
+                myRef.child(str_name).child("cs").setValue(str_cs);
+                myRef.child(str_name).child("gender").setValue(str_gender);
+                myRef.child(str_name).child("name").setValue(str_name);
+                myRef.child(str_name).child("num").setValue(0);
 
+                String Filename = str_name + ".png";
+                FirebaseStorage storage = FirebaseStorage.getInstance("gs://school-president-electio-cd383.appspot.com");
+                StorageReference storageRef = storage.getReference();
+                for (int i = 0; i<50; i++) {
+                    storageRef.child("image").child(Filename).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            url = uri.toString();
+                            myRef.child(str_name).child("profile").setValue(url);
+                        }
+                    });
+                }
+                Toast.makeText(this, "등록 성공", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, "사진을 올려주세요.", Toast.LENGTH_LONG).show();
             }
@@ -161,18 +173,19 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
     }
 
     private void uploadFile() {
+        EditText et_name = (EditText)findViewById(R.id.name);
+        String str_name = et_name.getText().toString();
         if (photoUri != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("업로드중...");
             progressDialog.show();
 
             FirebaseStorage storage = FirebaseStorage.getInstance();
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
-            Date now = new Date();
-            String filename = formatter.format(now) + ".png";
+           // SimpleDateFormat formatter = new SimpleDateFormat(str_name);
+           // Date now = new Date();
+            String filename = str_name + ".png";
             StorageReference storageRef = storage.getReferenceFromUrl("gs://school-president-electio-cd383.appspot.com").child("image/" + filename);
-            uri = storageRef.toString();
+
             storageRef.putFile(photoUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -196,6 +209,7 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
                    progressDialog.setMessage("Uploaded" + ((int)progress) + "% ...");
                 }
             });
+
         } else {
             Toast.makeText(getApplicationContext(), "사진을 올려주세요.", Toast.LENGTH_SHORT).show();
         }

@@ -1,52 +1,52 @@
 package com.example.presidentvote;
 
+import android.graphics.drawable.Drawable;
+
 public class SingerItem {
     String name;
     String cs;
     String gender;
-    String num;
-    int resId;
+    int num;
+    String profile;
 
-    public SingerItem(String name, String cs, String gender, String num, int resId){
-        this.name = name;
-        this.cs = cs;
-        this.gender = gender;
-        this.num = num;
-        this.resId = resId;
-    }
 
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getCs() {
         return cs;
     }
-    public void setCs(String name) {
+
+    public void setCs(String cs) {
         this.cs = cs;
     }
+
     public String getGender() {
         return gender;
     }
-    public void setGender() {
+
+    public void setGender(String gender) {
         this.gender = gender;
     }
-    public String getNum() {
+
+    public int getNum() {
         return num;
     }
-    public void setNum(String name) {
+
+    public void setNum(int num) {
         this.num = num;
     }
-    public int getResId() {
-        return resId;
+
+    public String getProfile() {
+        return profile;
     }
-    @Override
-    public String toString() {
-        return "SingerItem{" +
-                "name='" + name + '\'' +
-                ", cs='" + cs + '\'' +
-                '}';
+
+    public void setProfile(String icon) {
+        this.profile = icon;
     }
 }
