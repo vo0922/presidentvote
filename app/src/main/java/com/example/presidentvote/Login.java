@@ -102,6 +102,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                 myRef.child(userID).child("email").setValue(Email);
                                 myRef.child(userID).child("votenum").setValue(1);
 
+
                                 Toast.makeText(Login.this, "로그인성공", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), way.class);
                                 intent.putExtra("ninName", account.getDisplayName());
