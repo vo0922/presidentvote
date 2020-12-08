@@ -21,7 +21,9 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:text="투표하기"
-            app:backgroundTint="#7AA7BC" />
+            app:backgroundTint="#7AA7BC"
+            android:clickable="true"
+            android:onClick="vote" />
 
         <Button
             android:id="@+id/votelist"
@@ -66,7 +68,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingRight="10dp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,0 +1,12 @@
+<menu  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_btn6"
+        android:title="투표하기"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_btn7"
+        android:title="목록"
+        app:showAsAction="never" />
+
+</menu>

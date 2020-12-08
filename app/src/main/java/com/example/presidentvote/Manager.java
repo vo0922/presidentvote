@@ -46,7 +46,7 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("candidate");
     String url = " ";
-
+    private String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +64,9 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .build();
+
+        Intent gintent = getIntent();
+        userID = gintent.getStringExtra("userID");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,11 +92,13 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
             return true;
         } else if(id == R.id.action_btn2) {
             Intent intent = new Intent(this, way.class);
+            intent.putExtra("userID", userID);
             startActivity(intent);
             finish();
             return true;
         } else if(id == R.id.action_btn3) {
             Intent intent = new Intent(this, managerview.class);
+            intent.putExtra("userID", userID);
             startActivity(intent);
             finish();
             return true;

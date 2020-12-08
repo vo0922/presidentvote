@@ -37,6 +37,7 @@ public class managerview extends AppCompatActivity implements GoogleApiClient.On
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private GoogleApiClient googleApiClient;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,8 @@ public class managerview extends AppCompatActivity implements GoogleApiClient.On
             }
         });
 
+        Intent gintent = getIntent();
+        userID = gintent.getStringExtra("userID");
 
         adapter = new MyAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
@@ -122,11 +125,13 @@ public class managerview extends AppCompatActivity implements GoogleApiClient.On
             return true;
         } else if(id == R.id.action_btn2) {
             Intent intent = new Intent(this, way.class);
+            intent.putExtra("userID", userID);
             startActivity(intent);
             finish();
             return true;
         } else if(id == R.id.action_btn4) {
             Intent intent = new Intent(this, Manager.class);
+            intent.putExtra("userID", userID);
             startActivity(intent);
             finish();
             return true;

@@ -35,6 +35,7 @@ public class voteview extends AppCompatActivity implements GoogleApiClient.OnCon
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private GoogleApiClient googleApiClient;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,9 @@ public class voteview extends AppCompatActivity implements GoogleApiClient.OnCon
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>();
+
+        Intent gintent = getIntent();
+        userID = gintent.getStringExtra("userID");
 
         database = FirebaseDatabase.getInstance();
 
@@ -106,6 +110,7 @@ public class voteview extends AppCompatActivity implements GoogleApiClient.OnCon
             return true;
         } else if(id == R.id.action_btn2) {
             Intent intent = new Intent(this, way.class);
+            intent.putExtra("userID", userID);
             startActivity(intent);
             finish();
             return true;

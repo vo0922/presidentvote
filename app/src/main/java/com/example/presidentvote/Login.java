@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -27,13 +28,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private FirebaseAuth auth = null;;
     private SignInButton btn_google;
     private GoogleApiClient googleApiClient;
     private static final int REQ_SIGN_GOOGLE = 100; // 구글 로그인 결과 코드
-
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("user");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,12 +93,20 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         String Email = account.getEmail();
+                        String userID = account.getId();
+
                         if(task.isSuccessful()) {
                             if(Email.contains("dhu.ac.kr")) {
+                                TextView tv_num = (TextView)findViewById(R.id.votenum);
+                                DatabaseReference myRef2 = database.getReference("user").child(userID).child("votenum");
+                                myRef.child(userID).child("email").setValue(Email);
+                                myRef.child(userID).child("votenum").setValue(1);
+
                                 Toast.makeText(Login.this, "로그인성공", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), way.class);
                                 intent.putExtra("ninName", account.getDisplayName());
                                 intent.putExtra("photoUri", String.valueOf(account.getPhotoUrl()));
+                                intent.putExtra("userID", account.getId());
                                 startActivity(intent);
                             } else {
                                 Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
@@ -105,6 +123,11 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                         }
                     }
                 });
+    }
+
+    private int datasetValue(int votenum, int getvalue) {
+        votenum = getvalue;
+        return votenum;
     }
 
     @Override
