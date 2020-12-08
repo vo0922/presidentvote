@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -28,10 +26,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class managerview extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class voteview extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private RecyclerView recyclerView;
-    private MyAdapter adapter;
+    private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<SingerItem> arrayList;
     private FirebaseDatabase database;
@@ -41,8 +39,8 @@ public class managerview extends AppCompatActivity implements GoogleApiClient.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_managerview);
-        setTitle("관리자 목록");
+        setContentView(R.layout.activity_voteview);
+        setTitle("투표 목록");
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -80,26 +78,12 @@ public class managerview extends AppCompatActivity implements GoogleApiClient.On
             }
         });
 
-
         adapter = new MyAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
-                SingerItem item = adapter.getItem(pos);
-                Toast.makeText(getApplicationContext(), item.getName(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), infodelete.class);
-                intent.putExtra("name", item.getName());
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
     }
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.manager_view_menu, menu);
+        getMenuInflater().inflate(R.menu.vote_view_menu, menu);
         return true;
     }
 
@@ -112,7 +96,7 @@ public class managerview extends AppCompatActivity implements GoogleApiClient.On
                 @Override
                 public void onResult(@NonNull Status status) {
                     FirebaseAuth.getInstance().signOut();
-                    Toast.makeText(managerview.this, "로그아웃 하였습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(voteview.this, "로그아웃 하였습니다.", Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -122,11 +106,6 @@ public class managerview extends AppCompatActivity implements GoogleApiClient.On
             return true;
         } else if(id == R.id.action_btn2) {
             Intent intent = new Intent(this, way.class);
-            startActivity(intent);
-            finish();
-            return true;
-        } else if(id == R.id.action_btn4) {
-            Intent intent = new Intent(this, Manager.class);
             startActivity(intent);
             finish();
             return true;

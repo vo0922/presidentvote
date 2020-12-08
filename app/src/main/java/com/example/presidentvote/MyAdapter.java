@@ -26,6 +26,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
     private Context context;
     private String gname;
 
+    public interface OnItemClickListener {
+        void onItemClick(View v, int pos);
+    }
+
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
+    }
+
     public MyAdapter(ArrayList<SingerItem> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
@@ -76,11 +86,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context.getApplicationContext(), infodelete.class);
-                    intent.putExtra("name", tv_name.getText());
-                    context.startActivity(intent);
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION) {
+                        if(mListener != null) {
+                            mListener.onItemClick(v, pos);
+                        }
+                    }
                 }
             });
         }
+    }
+    public SingerItem getItem(int pos) {
+        return arrayList.get(pos);
     }
 }

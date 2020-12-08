@@ -114,4 +114,10 @@ public class way extends AppCompatActivity implements GoogleApiClient.OnConnecti
             }
         }).show();
     }
+
+    public void voteView(View view) {
+        Intent intent = new Intent(getApplicationContext(), voteview.class);
+        startActivity(intent);
+        finish();
+    }
 }

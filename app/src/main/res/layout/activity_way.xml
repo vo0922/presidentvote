@@ -30,7 +30,9 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:text="투표목록"
-            android:backgroundTint="#7AA7BC"/>
+            android:backgroundTint="#7AA7BC"
+            android:clickable="true"
+            android:onClick="voteView" />
 
         <Button
             android:id="@+id/manager"

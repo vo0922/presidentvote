@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PresidentVote">
-        <activity android:name=".infodelete"></activity>
+        <activity android:name=".voteview"></activity>
+        <activity android:name=".infodelete" />
         <activity android:name=".managerview" />
         <activity android:name=".alert_dialog" />
         <activity android:name=".Manager" />
