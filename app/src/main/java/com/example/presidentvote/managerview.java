@@ -94,6 +94,7 @@ public class managerview extends AppCompatActivity implements GoogleApiClient.On
                 Toast.makeText(getApplicationContext(), item.getName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), infodelete.class);
                 intent.putExtra("name", item.getName());
+                intent.putExtra("userID", userID);
                 startActivity(intent);
                 finish();
             }

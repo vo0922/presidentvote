@@ -197,6 +197,7 @@ public class Manager extends AppCompatActivity implements GoogleApiClient.OnConn
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Intent intent = new Intent(getApplicationContext(), managerview.class);
+                            intent.putExtra("userID", userID);
                             startActivity(intent);
                             finish();
                         }

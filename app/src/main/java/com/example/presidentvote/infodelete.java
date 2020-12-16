@@ -33,6 +33,7 @@ public class infodelete extends AppCompatActivity {
     TextView tv_cs;
     TextView tv_gender;
     TextView tv_num;
+    String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,7 @@ public class infodelete extends AppCompatActivity {
 
         Intent intent = getIntent();
         String str_name = intent.getStringExtra("name");
+        userID = intent.getStringExtra("userID");
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("candidate");
         myRef.child(str_name).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -84,6 +86,7 @@ public class infodelete extends AppCompatActivity {
 
         if(id == R.id.action_btn3) {
             Intent intent = new Intent(this, managerview.class);
+            intent.putExtra("userID", userID);
             startActivity(intent);
             finish();
             return true;
@@ -96,6 +99,7 @@ public class infodelete extends AppCompatActivity {
             myRef.removeValue();
 
             Intent intent = new Intent(this, managerview.class);
+            intent.putExtra("userID", userID);
             startActivity(intent);
             finish();
             return true;

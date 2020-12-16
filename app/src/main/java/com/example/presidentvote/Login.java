@@ -101,18 +101,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                 DatabaseReference myRef2 = database.getReference("user").child(userID).child("votenum");
                                 myRef.child(userID).child("email").setValue(Email);
                                 myRef.child(userID).child("votenum").setValue(1);
-                                /* 여기 안됩니다.
-                                myRef.child(userID).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        myRef.child(userID).child("votenum").setValue(1);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });*/
 
                                 Toast.makeText(Login.this, "로그인성공", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), way.class);
